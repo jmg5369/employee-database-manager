@@ -4,7 +4,9 @@ const mysql = require("mysql2");
 
 const cTable = require("console.table");
 
-const util = require("util")
+const util = require("util");
+const { allowedNodeEnvironmentFlags } = require("process");
+const { ADDRGETNETWORKPARAMS } = require("dns");
 
 const db = mysql.createConnection(
     {
@@ -19,3 +21,38 @@ const db = mysql.createConnection(
   );
 
   const query = util.promisify(db.query).bind(db);
+
+  function init () {
+    inquirer.prompt(
+      [
+        {
+          type: "list", 
+          name: "choice",
+          message: "What would you like to do next?",
+          choices: [
+            "See all Departments", "See all Roles", "See all Employees", "Add a department", "Add Role", "Add new Employee", "Update an Employee", "Exit Application", 
+          ]
+        }
+      ]
+    ).then((response) => {
+      if (response.choice === "See all Departments") {
+        getAllDepartments()
+      }else if(response.choice === "See all Roles") {
+        getAllRoles()
+      }else if(response.choice === "See all Employees"){
+        getAllEmployees()
+      }else if(response.choice === "Add a department") {
+        addDepartment()
+      }else if(response.choice === "Add Role") {
+        addRole()
+      }else if(response.choice === "Add new Employee") {
+        addEmployee()
+      }else if(response.choice === "Update an Employee") {
+        updateEmployee()
+      }else if (response.choice === "Exit Application") {
+        exitApplication()
+      }
+    })
+  }
+
+  init()
