@@ -55,4 +55,35 @@ const db = mysql.createConnection(
     })
   }
 
+async function getAllDepartments() {
+  let data = await query("SELECT * FROM department;");
+  let table = cTable.getTable(data)
+  console.log(table)
+init()
+
+}
+async function getAllRoles() {
+  let data = await query("SELECT * FROM role;");
+  let table = cTable.getTable(data)
+  console.log(table)
+init()
+
+}
+async function getAllEmployees() {
+  let data = await query("SELECT * FROM employee;");
+  let table = cTable.getTable(data)
+  console.log(table)
+init()
+
+}
+
+
+
+
+
+
+
+
+
+
   init()
